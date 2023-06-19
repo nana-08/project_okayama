@@ -1,11 +1,12 @@
 # project_okayama
 Internship in Okayama University, Japan
+Tutor: Norikazu Takahashi
 
 ## GOAL of the overall project: 
 Develop and implement a distributed algorithm in Python for solving a system of linear equations Bx = C.
 
 ## GOALS step by step
-- [ ] Read [Takahashi and Kawashima's paper](ieeecsl2018_takahashi_kawashima.pdf) and understand what is done in the Projected Consensus Algorithm.
+- [x] Read [Takahashi and Kawashima's paper](ieeecsl2018_takahashi_kawashima.pdf) and understand what is done in the Projected Consensus Algorithm.
 
 - [ ] Implement a simplified version of their algorithm using Python on a single computer.
 
