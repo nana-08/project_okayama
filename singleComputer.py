@@ -12,16 +12,16 @@ print("-------------------------------------------------------------")
 print("--- Please describe the system:")
 m = int(input("------ Number of agents:\n"))
 
-print("------ B matrix (enter each line and separate each value with a space):")
+print("------ Coefficient matrix B (enter each line and separate each value with a space):")
 B = np.zeros((m, m))
 for i in range(m):
     bi = [int(num) for num in input().split(" ", m-1)]
     B[i] = np.array(bi)
 
-print("------ C vector (separate each value with a space):")
+print("------ Right hand side vector C (separate each value with a space):")
 C = np.array([int(num) for num in input().split(" ", m-1)])
 
-print("------ Weight matrix (enter each line and separate each value with a space):")
+print("------ Weight matrix A (enter each line and separate each value with a space):")
 A = np.zeros((m, m))
 for i in range(m):
     ai = [float(num) for num in input().split(" ", m-1)]
@@ -29,26 +29,6 @@ for i in range(m):
 
 
 # COMPUTING
-# B matrix
-# B = np.array([[-65, 33, 28, 71, 59, -66],
-#               [56, 29, 38, -75, -33, 86],
-#               [72, -91, 73, 14, -70, 43],
-#               [16, 9, -23, 63, -62, 85],
-#               [-21, 86, -6, 23, 56, 24]])
-# # C vector
-# C = np.array([-115, 978, 612, 148, 399])
-
-# m = 2
-
-# B = np.array([[3, 7],
-#               [4, 2]])
-
-# C = np.array([16, 14])
-
-# # weights
-# A = np.array([[0.3, 0.7],
-#               [0.5, 0.5]])
-
 print("EQUATION SYSTEM:")
 for i in range(m):
     print("|",end=" ")
