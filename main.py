@@ -37,17 +37,22 @@ print("-------------------------------------------------------------")
 m = 2
 
 B = np.array([[3, 7],
-     [4, 2]])
+              [4, 2]])
 
 C = np.array([16, 14])
+
+# weights
+A = np.array([[0.5, 0.5],
+              [0.5, 0.5]])
 
 
 # for each agent, projection onto the hyperplane
 # initially each agent computes a solution
 X = np.zeros((m, m))
-prevxMean = np.zeros((m))
-xMean = np.zeros((m))
-for iter in range(10):  # todo
+prevxHat = np.zeros((m, m))
+xHat = np.zeros((m, m))
+iter = 0
+while 1:  # todo
     for i in range(m):
         # STEP 1: Projection
         bi = B[i]
@@ -57,21 +62,23 @@ for iter in range(10):  # todo
             # idea: everything but x1 is zero
             xi = np.zeros((m))
             xi[0] = ci/bi[0]
-            print(xi)
             X[i] = xi
         else:
-            # every other states: project xMean on hyperplane 
-            xi = (np.identity(m) - bi.T@bi/(np.linalg.norm(bi)**2))@xMean + ci*bi.T/(np.linalg.norm(bi)**2)
+            # every other states: project xHat on hyperplane 
+            print("b",i," =",bi,", c",i," =",ci)
+            xi = (np.identity(m) - bi.T@bi/(np.linalg.norm(bi)**2))@xHat[i] + ci*bi.T/(np.linalg.norm(bi)**2)
+            print("projection x",i,":",xi)
             X[i] = xi
 
     # STEP 2: Compare solutions
-    # mean
-    prevxMean = xMean.copy()
+    # weighted mean
     for i in range(m):
-        xMean[i] = X.T[i].mean()
+        xHat[i] = A[i]@X
 
     print("X = ", X)
-    print("prevxMean = ", prevxMean, ", xMean = ", xMean)
-    dist = np.linalg.norm(prevxMean - xMean)
-    if dist < 1E-6:
+    print("xHat = ", xHat)
+    dist = np.linalg.norm(prevxHat - xHat)
+    if dist < 1E-6 or iter == 10:
         break
+
+    iter = iter + 1
