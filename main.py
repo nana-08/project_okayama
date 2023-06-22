@@ -29,6 +29,14 @@ for i in range(m):
 
 
 # COMPUTING
+# B matrix
+# B = np.array([[-65, 33, 28, 71, 59, -66],
+#               [56, 29, 38, -75, -33, 86],
+#               [72, -91, 73, 14, -70, 43],
+#               [16, 9, -23, 63, -62, 85],
+#               [-21, 86, -6, 23, 56, 24]])
+# # C vector
+# C = np.array([-115, 978, 612, 148, 399])
 
 # m = 2
 
@@ -58,9 +66,9 @@ X = np.zeros((m, m))
 prevXHat = np.zeros((m, m))
 xHat = np.zeros((m, m))
 iter = 0
-while 1:  
-    # STEP 1: Projection
+while 1:  # todo
     for i in range(m):
+        # STEP 1: Projection
         bi = B[i]
         ci = C[i]
         if iter == 0:
@@ -87,3 +95,5 @@ while 1:
     if dist < 1E-6:
         print("Solution found by the agents:", np.mean(xHat, axis=0))
         break
+
+    iter = iter + 1
