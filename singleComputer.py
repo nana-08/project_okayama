@@ -5,9 +5,9 @@
 import numpy as np
 
 
-# INERFACE AND PARAMETERS
+# INERFACE AND PARAMETERS DEFINITION
 print("-------------------------------------------------------------")
-print("DISTRIBUTED ALGORITHMS FOR SOLVING A SYSTEM OF LINEAR EQUATIONS\nsimplified, single computer version")
+print("DISTRIBUTED ALGORITHMS FOR SOLVING A SYSTEM OF LINEAR EQUATIONS\nsimplified, single computer version, sequential")
 print("-------------------------------------------------------------")
 print("--- Please describe the system:")
 m = int(input("------ Number of agents:\n"))
@@ -51,20 +51,20 @@ while 1:  # todo
         # STEP 1: Projection
         bi = B[i]
         ci = C[i]
+        xi = np.zeros((m))
         if iter == 0:
             # initial state: agent has to compute a solution
             # idea: everything but x1 is zero
-            xi = np.zeros((m))
             xi[0] = ci/bi[0]
-            X[i] = xi
         else:
             # every other states: project xHat on hyperplane
             xi = (np.identity(m) - np.outer(bi.T,bi)/(np.linalg.norm(bi)**2))@xHat[i] + ci*bi.T/(np.linalg.norm(bi)**2)
             #print("projection x",i,":",xi)
-            X[i] = xi
+        
+        X[i] = xi
 
     # STEP 2: Compare solutions
-    # weighted mean
+    # weighted average
     prevXHat = xHat.copy()
     for i in range(m):
         xHat[i] = A[i]@X
