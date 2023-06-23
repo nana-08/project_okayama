@@ -76,6 +76,7 @@ def agent(queues, i, bi, ci, ai):
                 data = queues[i].get(timeout=3)
                 X[data[0]] = data[1]
         except:
+            xi = [round(n, 6) for n in xi]
             print("Solution found by the agent",i,":", xi)
             break
 
@@ -84,6 +85,7 @@ def agent(queues, i, bi, ci, ai):
 
         dist = np.linalg.norm(xHat - prevXHat)
         if dist < 1E-6:
+            xHat = [round(n, 6) for n in xHat]
             print("Solution found by the agent",i,":", xHat)
             break
 
