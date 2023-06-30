@@ -13,16 +13,25 @@ m = int(input("------ Number of agents:\n"))
 print("------ Coefficient matrix B (enter each line and separate each value with a space):")
 B = np.zeros((m, m))
 for i in range(m):
-    bi = [int(num) for num in input().split(" ", m-1)]
+    bi = [int(num) for num in input().split(" ")]
+    while len(bi) != m:
+        print("ERROR: Row must have m elements. Please try again.")
+        bi = [int(num) for num in input().split(" ")]
     B[i] = np.array(bi)
 
 print("------ Right hand side vector C (separate each value with a space):")
-C = np.array([int(num) for num in input().split(" ", m-1)])
+C = np.array([int(num) for num in input().split(" ")])
+while C.shape[0] != m:
+    print("ERROR: Row must have m elements. Please try again.")
+    C = np.array([int(num) for num in input().split(" ")])
 
 print("------ Weight matrix A (enter each line and separate each value with a space):")
 A = np.zeros((m, m))
 for i in range(m):
-    ai = [float(num) for num in input().split(" ", m-1)]
+    ai = [float(num) for num in input().split(" ")]
+    while round(sum(ai),1) != 1:
+        print("ERROR: Sum of the row must equal 1. Please try again.")
+        ai = [float(num) for num in input().split(" ")]
     A[i] = np.array(ai)
 
 

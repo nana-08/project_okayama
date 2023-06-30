@@ -21,3 +21,6 @@ Execution of the Projected Consensus Algorithm on a single thread. The agents ex
 
 ### multithread.py
 Execution of the Projected Consensus Algorithm on several threads: each agent executes the algorithm on its dedicated thread. Agents communicate via their queues. 
+
+Notes:
+For 10 agents, it takes up to a million iterations to finish
