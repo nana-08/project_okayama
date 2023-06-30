@@ -29,6 +29,9 @@ print("------ Weight matrix A (enter each line and separate each value with a sp
 A = np.zeros((m, m))
 for i in range(m):
     ai = [float(num) for num in input().split(" ")]
+    while len(ai) != m:
+        print("ERROR: Row must have m elements. Please try again.")
+        ai = [float(num) for num in input().split(" ")]
     while round(sum(ai),1) != 1:
         print("ERROR: Sum of the row must equal 1. Please try again.")
         ai = [float(num) for num in input().split(" ")]
@@ -94,7 +97,7 @@ def agent(queues, i, bi, ci, ai):
         xHat = ai@X
 
         dist = np.linalg.norm(xHat - prevXHat)
-        if dist < 1E-6:
+        if dist < 1E-3:
             xHat = [round(n, 6) for n in xHat]
             print("Solution found by the agent",i,":", xHat)
             print("Number of iterations for agent",i,":",iter)

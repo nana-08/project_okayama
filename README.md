@@ -23,4 +23,4 @@ Execution of the Projected Consensus Algorithm on a single thread. The agents ex
 Execution of the Projected Consensus Algorithm on several threads: each agent executes the algorithm on its dedicated thread. Agents communicate via their queues. 
 
 Notes:
-For 10 agents, it takes up to a million iterations to finish
+For 10 agents, it takes up to a million iterations for each agent to finish
