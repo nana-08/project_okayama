@@ -78,6 +78,7 @@ def agent(queues, i, bi, ci, ai):
         except:
             xi = [round(n, 6) for n in xi]
             print("Solution found by the agent",i,":", xi)
+            print("Number of iterations for agent",i,":",iter)
             break
 
         prevXHat = xHat.copy()
@@ -87,6 +88,7 @@ def agent(queues, i, bi, ci, ai):
         if dist < 1E-6:
             xHat = [round(n, 6) for n in xHat]
             print("Solution found by the agent",i,":", xHat)
+            print("Number of iterations for agent",i,":",iter)
             break
 
         iter = iter + 1
