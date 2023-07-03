@@ -1,6 +1,7 @@
 from queue import Queue
 from threading import Thread
 import numpy as np
+import time
 
 
 # INERFACE AND PARAMETERS DEFINITION
@@ -63,7 +64,11 @@ def agent(queues, i, bi, ci, ai):
     print(i,"has",nbNeighbors,"neighbors")
 
     iter = 0
+    temps = time.time()
     while True:
+        if time.time() - temps >= 1200:  # pas plus de 20 minutes
+            break
+
         # STEP 1: Projection
         xi = np.zeros((m))
         if iter == 0:
@@ -89,9 +94,6 @@ def agent(queues, i, bi, ci, ai):
                 data = queues[i].get(timeout=3)
                 X[data[0]] = data[1]
         except:
-            xi = [round(n, 6) for n in xi]
-            print("Solution found by the agent",i,":", xi)
-            print("Number of iterations for agent",i,":",iter)
             break
 
         prevXHat = xHat.copy()
@@ -99,13 +101,13 @@ def agent(queues, i, bi, ci, ai):
 
         dist = np.linalg.norm(xHat - prevXHat)
         if dist < 1E-6:
-            xHat = [round(n, 6) for n in xHat]
-            print("xHat",i,":",xHat,", prevXHat",i,":",prevXHat)
-            print("Solution found by the agent",i,":", xHat)
-            print("Number of iterations for agent",i,":",iter)
             break
 
         iter = iter + 1
+        
+    xi = [n for n in xHat]
+    print("Solution found by the agent",i,":", xi)
+    print("Number of iterations for agent",i,":",iter)
         
           
 # Create the shared queue and variables and launch both threads
