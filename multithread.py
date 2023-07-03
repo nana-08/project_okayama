@@ -60,6 +60,7 @@ def agent(queues, i, bi, ci, ai):
     for j in range(m):
         if i!=j and ai[j]>0.:   # do not count yourself as a neighbor
             nbNeighbors+=1
+    print(i,"has",nbNeighbors,"neighbors")
 
     iter = 0
     while True:
@@ -97,8 +98,9 @@ def agent(queues, i, bi, ci, ai):
         xHat = ai@X
 
         dist = np.linalg.norm(xHat - prevXHat)
-        if dist < 1E-3:
+        if dist < 1E-6:
             xHat = [round(n, 6) for n in xHat]
+            print("xHat",i,":",xHat,", prevXHat",i,":",prevXHat)
             print("Solution found by the agent",i,":", xHat)
             print("Number of iterations for agent",i,":",iter)
             break
