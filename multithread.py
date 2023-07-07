@@ -64,10 +64,10 @@ def agent(queues, i, bi, ci, ai):
     print(i,"has",nbNeighbors,"neighbors")
 
     iter = 0
-    temps = time.time()
+    start = time.time()
     while True:
-        if time.time() - temps >= 1200:  # pas plus de 20 minutes
-            break
+        # if time.time() - start >= 1200:  # pas plus de 20 minutes
+        #     break
 
         # STEP 1: Projection
         xi = np.zeros((m))
@@ -91,7 +91,7 @@ def agent(queues, i, bi, ci, ai):
         X[i] = xi
         try:
             for _ in range(nbNeighbors):
-                data = queues[i].get(timeout=3)
+                data = queues[i].get(timeout=1)
                 X[data[0]] = data[1]
         except:
             break
@@ -105,9 +105,8 @@ def agent(queues, i, bi, ci, ai):
 
         iter = iter + 1
         
-    xi = [n for n in xHat]
-    print("Solution found by the agent",i,":", xi)
-    print("Number of iterations for agent",i,":",iter)
+    temps = time.time()-start
+    print("Solution found by the agent",i,":",xHat,", in",iter,"iterations and",round(temps,3),"seconds")
         
           
 # Create the shared queue and variables and launch both threads
