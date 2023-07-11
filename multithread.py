@@ -51,8 +51,6 @@ for i in range(m):
 
 print("Solution found with numpy:",np.linalg.solve(B,C))
 
-_sentinel = object()
-
 def agent(queues, i, bi, ci, ai):
     prevXHat = np.zeros((m))
     xHat = np.zeros((m))
@@ -61,13 +59,10 @@ def agent(queues, i, bi, ci, ai):
     for j in range(m):
         if i!=j and ai[j]>0.:   # do not count yourself as a neighbor
             nbNeighbors+=1
-    print(i,"has",nbNeighbors,"neighbors")
 
     iter = 0
     start = time.time()
     while True:
-        # if time.time() - start >= 1200:  # pas plus de 20 minutes
-        #     break
 
         # STEP 1: Projection
         xi = np.zeros((m))
@@ -79,23 +74,24 @@ def agent(queues, i, bi, ci, ai):
             # every other states: project xHat on hyperplane
             xi = (np.identity(m) - np.outer(bi.T,bi)/(np.linalg.norm(bi)**2))@xHat + ci*bi.T/(np.linalg.norm(bi)**2)
         
-        # todo: si k!=i et A[i,k] > 0
+        # communicate your solutoin to your neighbors
         for k in range(m):
             if k != i and ai[k] > 0:
-                queues[k].put([i, xi]) # each agent communicates their id and their current solution
+                queues[k].put((i, xi)) # each agent communicates their id and their current solution
+
 
         # STEP 2: Compare solutions
-        # weighted average
-        # each agent expects a message from every agent they are connected to
+        # each agent expects a message only from the agents they are connected to => nbNeighbors messages in total
         X = np.zeros((m, m))
         X[i] = xi
         try:
             for _ in range(nbNeighbors):
-                data = queues[i].get(timeout=1)
-                X[data[0]] = data[1]
+                j, xj = queues[i].get(timeout=1)
+                X[j] = xj
         except:
             break
 
+        # weighted average
         prevXHat = xHat.copy()
         xHat = ai@X
 
@@ -106,7 +102,7 @@ def agent(queues, i, bi, ci, ai):
         iter = iter + 1
         
     temps = time.time()-start
-    print("Solution found by the agent",i,":",xHat,", in",iter,"iterations and",round(temps,3),"seconds")
+    print("Solution found by the agent",i,":",xHat,", in",iter,"iterations,",round(temps,3),"seconds")
         
           
 # Create the shared queue and variables and launch both threads
@@ -116,7 +112,7 @@ for i in range(m):
     queues.append(qi)
 
 for i in range(m):
-    ti = Thread(target = agent, args =(queues, i, B[i], C[i], A[i]))    # each thread ti only knows the ith row of each matrix
+    ti = Thread(target = agent, args =(queues, i, B[i], C[i], A[i]))    # each thread ti only knows the i-th row of each matrix
     ti.start()
 
         
