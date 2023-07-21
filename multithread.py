@@ -74,7 +74,7 @@ def agent(queues, i, bi, ci, ai):
             # every other states: project xHat on hyperplane
             xi = (np.identity(m) - np.outer(bi.T,bi)/(np.linalg.norm(bi)**2))@xHat + ci*bi.T/(np.linalg.norm(bi)**2)
         
-        # communicate your solutoin to your neighbors
+        # communicate your solution to your neighbors
         for k in range(m):
             if k != i and ai[k] > 0:
                 queues[k].put((i, xi)) # each agent communicates their id and their current solution
