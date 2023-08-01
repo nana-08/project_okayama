@@ -1,43 +1,58 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-x = [2, 5, 10]
-
-### ITERATIONS
-iter2thread = np.array([99, 99]).mean()
-iter5thread = np.array([1247, 1247, 1247, 1247, 1247]).mean()
-iter10thread = np.array([440636, 440636, 440636, 440636, 440636, 440636, 440636, 440636, 440636, 440636]).mean()
-
-iter2rpi = np.array([111, 98]).mean()
-iter5rpi = np.array([1078, 1075, 1073, 1077, 774]).mean()
-iter10rpi = np.array([]).mean()
-
-### TIME
-time2thread = np.array([0.015, 0.016]).mean()
-time5thread = np.array([0.662, 0.663, 0.663, 0.663, 0.661]).mean()
-time10thread = np.array([623.673, 623.672, 623.681, 623.677, 623.676, 623.682, 623.672, 623.675, 623.674, 623.679]).mean()
-
-time2rpi = np.array([2.212, 2.15]).mean()
-time5rpi = np.array([]).mean()
-time10rpi = np.array([]).mean()
+x = np.arange(start=2,stop=9)
 
 
 ### PLOT
 plt.subplot(121)
-iterThread = [iter2thread, iter5thread, iter10thread]
-iterRpi = [iter2rpi, iter5rpi, iter10rpi]
-plt.plot(x, iterThread, label="Multithread")
-plt.plot(x, iterRpi, label="Raspberry Pi")
+iterThread = [237, 541, 11958.4, 8556.3, 6610.1, 11487.9, 243392.6]
+iterRpi = [187.5,367.67,8077.25,6492.4,4387.67,8239.857,641279.875]
+plt.plot(x, iterThread, "-ro", label="Multithread")
+plt.plot(x, iterRpi, "-bo", label="Raspberry Pi")
 plt.xlabel("Number of agents")
 plt.ylabel("Number of iterations")
+plt.legend()
+plt.title("Average number of iterations vs number of agents")
+
+annoThread = [str(int(y)) for y in iterThread]
+for xi, yi, text in zip(x, iterThread, annoThread):
+    plt.annotate(text,
+                xy=(xi, yi), xycoords='data',
+                xytext=(10, 10), textcoords='offset points',
+                bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="red"))
+    
+annoRpi = [str(int(y)) for y in iterRpi]
+for xi, yi, text in zip(x, iterRpi, annoRpi):
+    plt.annotate(text,
+                xy=(xi, yi), xycoords='data',
+                xytext=(10, -10), textcoords='offset points',
+                bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="blue"))
+
 
 plt.subplot(122)
-timeThread = [time2thread, time5thread, time10thread]
-timeRpi = [time2rpi, time5rpi, time10rpi]
-plt.plot(x, timeThread, label="Multithread")
-plt.plot(x, timeRpi, label="Raspberry Pi")
+timeThread = [0.03053, 0.15498, 5.38131, 5.27859, 5.1862, 11.3038, 291.905]
+timeRpi = [4.56563,17.05344,465.64929,496.56615,386.28109,890.72393,68948.3435]
+plt.plot(x, timeThread, "-ro", label="Multithread")
+plt.plot(x, timeRpi, "-bo", label="Raspberry Pi")
 plt.xlabel("Number of agents")
 plt.ylabel("Time (seconds)")
+plt.legend()
+plt.title("Average time vs number of agents")
+
+annoThread = [str(round(y, 6))+" s" for y in timeThread]
+for xi, yi, text in zip(x, timeThread, annoThread):
+    plt.annotate(text,
+                xy=(xi, yi), xycoords='data',
+                xytext=(10, -10), textcoords='offset points',
+                bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="red"))
+    
+annoRpi = [str(round(y, 6))+" s" for y in timeRpi]
+for xi, yi, text in zip(x, timeRpi, annoRpi):
+    plt.annotate(text,
+                xy=(xi, yi), xycoords='data',
+                xytext=(10, 10), textcoords='offset points',
+                bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="blue"))
 
 
 

@@ -10,7 +10,7 @@ Develop and implement a distributed algorithm in Python for solving a system of 
 
 - [x] Implement a simplified version of their algorithm using Python on a single computer (sequential and mutlithread).
 
-- [ ] Implement the program on 10 Raspberry Pi computers communicating witn each other (ex, 10 computers work as web servers and communication is done using http protocols)
+- [x] Implement the program on 10 Raspberry Pi computers communicating witn each other (ex, 10 computers work as web servers and communication is done using http protocols)
 
 ## FILES
 ### singleComputer.py
@@ -22,5 +22,5 @@ Execution of the Projected Consensus Algorithm on a single thread. The agents ex
 ### multithread.py
 Execution of the Projected Consensus Algorithm on several threads: each agent executes the algorithm on its dedicated thread. Agents communicate via their queues. 
 
-Notes:
-For 10 agents, it takes up to a million iterations for each agent to finish
+### timePlot.py
+Analysis of the results and comparison of performances between the multithread version of the program and the Raspberry Pi version.
