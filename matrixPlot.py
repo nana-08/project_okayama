@@ -4,9 +4,9 @@ import numpy as np
 x = np.arange(2,11)
 
 # ITERATIONS
-diagIterThreads = [19,36,52,65,80,95,107,121,134]
-diagIterRpi = [19,35.67,39.5,53.6,67.67,79.29,90,103.53,113]
-upTriIterThreads = [44,123,1227.6,4789.3,10645.4,47014.3]
+diagIterThreads = [33,59,84,107,130,156,176,200,222]
+diagIterRpi = []
+upTriIterThreads = [77,233,2326,9295,24966,70761]
 upTriIterRpi = []
 lowTriIterThreads = []
 lowTriIterRpi = []
@@ -14,9 +14,9 @@ symIterThreads = []
 symIterRpi = []
 
 # TIME
-diagTimeThreads = [0.00324,0.01005,0.02378,0.04123,0.06523,0.09537,0.12883,0.16911,0.21951]
-diagTimeRpi = [0.53991,2.09453,3.25948,5.09765,7.36286,9.94951,12.85357,15.60778,19.29513]
-upTriTimeThreads = [0.00683,0.03656,0.55841,2.95468,8.42703,46.11916] 
+diagTimeThreads = [0.04289,0.11666,0.16938,0.30011,0.37499,0.52349,0.66855,0.86002,1.10981]
+diagTimeRpi = []
+upTriTimeThreads = [0.09302,0.33475,4.39994,21.82845,66.59907,227.4724] 
 upTriTimeRpi = []
 lowTriTimeThreads = []
 lowTriTimeRpi = []

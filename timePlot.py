@@ -6,24 +6,24 @@ x = np.arange(start=2,stop=9)
 
 ### PLOT
 plt.subplot(121)
-iterThread = [237, 541, 11958.4, 8556.3, 6610.1, 11487.9, 243392.6]
-iterRpi = [187.5,367.67,8077.25,6492.4,4387.67,8239.857,641279.875]
-plt.plot(x, iterThread, "-ro", label="Multithread")
-plt.plot(x, iterRpi, "-bo", label="Raspberry Pi")
+regIterThreads = [157,346,2571,20464,54117,76610,16168,614895,77896]
+regIterRpi = [126.5,265,1891,15284.2]
+plt.plot(x, regIterThreads, "-ro", label="Multithread")
+plt.plot(x, regIterRpi, "-bo", label="Raspberry Pi")
 plt.xlabel("Number of agents")
 plt.ylabel("Number of iterations")
 plt.legend()
 plt.title("Average number of iterations vs number of agents")
 
-annoThread = [str(int(y)) for y in iterThread]
-for xi, yi, text in zip(x, iterThread, annoThread):
+annoThread = [str(int(y)) for y in regIterThreads]
+for xi, yi, text in zip(x, regIterThreads, annoThread):
     plt.annotate(text,
                 xy=(xi, yi), xycoords='data',
                 xytext=(10, 10), textcoords='offset points',
                 bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="red"))
     
-annoRpi = [str(int(y)) for y in iterRpi]
-for xi, yi, text in zip(x, iterRpi, annoRpi):
+annoRpi = [str(int(y)) for y in regIterRpi]
+for xi, yi, text in zip(x, regIterRpi, annoRpi):
     plt.annotate(text,
                 xy=(xi, yi), xycoords='data',
                 xytext=(10, -10), textcoords='offset points',
@@ -31,24 +31,24 @@ for xi, yi, text in zip(x, iterRpi, annoRpi):
 
 
 plt.subplot(122)
-timeThread = [0.03053, 0.15498, 5.38131, 5.27859, 5.1862, 11.3038, 291.905]
-timeRpi = [4.56563,17.05344,465.64929,496.56615,386.28109,890.72393,68948.3435]
-plt.plot(x, timeThread, "-ro", label="Multithread")
-plt.plot(x, timeRpi, "-bo", label="Raspberry Pi")
+regTimeThread = [0.16432, 0.49525,5.33365,52.23167,162.65825,271.0581,67.46152,2835.89328,394.86779]
+regTimeRpi = [3.35060,11.79704,124.23232,1244.56652]
+plt.plot(x, regTimeThread, "-ro", label="Multithread")
+plt.plot(x, regTimeRpi, "-bo", label="Raspberry Pi")
 plt.xlabel("Number of agents")
 plt.ylabel("Time (seconds)")
 plt.legend()
 plt.title("Average time vs number of agents")
 
-annoThread = [str(round(y, 6))+" s" for y in timeThread]
-for xi, yi, text in zip(x, timeThread, annoThread):
+annoThread = [str(round(y, 6))+" s" for y in regTimeThread]
+for xi, yi, text in zip(x, regTimeThread, annoThread):
     plt.annotate(text,
                 xy=(xi, yi), xycoords='data',
                 xytext=(10, -10), textcoords='offset points',
                 bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="red"))
     
-annoRpi = [str(round(y, 6))+" s" for y in timeRpi]
-for xi, yi, text in zip(x, timeRpi, annoRpi):
+annoRpi = [str(round(y, 6))+" s" for y in regTimeRpi]
+for xi, yi, text in zip(x, regTimeRpi, annoRpi):
     plt.annotate(text,
                 xy=(xi, yi), xycoords='data',
                 xytext=(10, 10), textcoords='offset points',
