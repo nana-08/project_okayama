@@ -31,7 +31,7 @@ for xi, yi, text in zip(x, regIterRpi, annoRpi):
 
 
 plt.subplot(122)
-regTimeThread = [0.16432, 0.49525,5.33365,52.23167,162.65825,271.0581,67.46152,2835.89328,394.86779]
+regTimeThread = [0.16432,0.49525,5.33365,52.23167,162.65825,271.0581,67.46152,2835.89328,394.86779]
 regTimeRpi = [3.35060,11.79704,124.23232,1244.56652]
 plt.plot(x, regTimeThread, "-ro", label="Multithread")
 plt.plot(x, regTimeRpi, "-bo", label="Raspberry Pi")

@@ -9,7 +9,7 @@ print("-------------------------------------------------------------")
 print("DISTRIBUTED ALGORITHMS FOR SOLVING A SYSTEM OF LINEAR EQUATIONS\nsimplified, single computer version, multithread")
 print("-------------------------------------------------------------")
 print("--- Please describe the system:")
-btype = int(input("------ Type of matrix:\n1. Regular\t2. Diagonal\t3. Upper Triangular\t4. Lower Triangular\t5. Symmetric\n"))
+btype = int(input("------ Type of matrix:\n1. Regular     2. Diagonal     3. Upper Triangular     4. Lower Triangular     5. Symmetric\n"))
 
 # print("------ Coefficient matrix B (enter each line and separate each value with a space):")
 # B = np.zeros((m, m))
@@ -186,16 +186,20 @@ print("Solution found with numpy:", trueSolution)
 nbIterTot = 0
 tempsTot = 0
 solutions = []
+points = np.zeros((m+1,2))
+points[0] = trueSolution[:2]
 
 nbIterTotLock = Lock()
 tempsTotLock = Lock()
 solutionsLock = Lock()
+pointsLock = Lock()
 
 # COMPUTING
 def agent(queues, i, bi, ci, ai):
     global nbIterTot
     global tempsTot
     global solutions
+    global points
 
     prevXHat = np.zeros((m))
     xHat = np.zeros((m))
@@ -213,14 +217,25 @@ def agent(queues, i, bi, ci, ai):
         xi = np.zeros((m))
         if iter == 0:
             # initial state: agent has to compute a solution
-            # idea: everything but the first xj where bij isn't null is zero
-            j = 0
-            while bi[j] == 0:
-                j+=1
-            xi[j] = ci/bi[j]
+            # idea: everything but xii is zero. if bii is null, first xij where bij isn't null is zero
+            if bi[i] == 0:
+                j = 0
+                while bi[j] == 0:
+                    j+=1
+                xi[j] = ci/bi[j]
+            else:
+                xi[i] = ci/bi[i]
         else:
             # every other states: project xHat on hyperplane
             xi = (np.identity(m) - np.outer(bi.T,bi)/(np.linalg.norm(bi)**2))@xHat + ci*bi.T/(np.linalg.norm(bi)**2)
+        
+        pointsLock.acquire()
+        points[i+1] = xi[:2]
+        strPoints = ""
+        for p in points:
+            strPoints += str(p[0])+", "+str(p[1])+"\n"
+        open("points.txt","w").write(strPoints)
+        pointsLock.release()
             
         # communicate your solution to your neighbors
         for k in range(m):
@@ -281,4 +296,3 @@ avgSolution = np.mean(solutions, axis=0)
 nbIterTot = nbIterTot/m
 tempsTot = tempsTot/m
 print("\nSolutions =",solutions,"\nAverage solution =",avgSolution,"\nAverage time =", round(tempsTot,5), "s\nAverage number of iterations =", round(nbIterTot, 2))
-

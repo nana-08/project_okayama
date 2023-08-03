@@ -4,30 +4,34 @@ import numpy as np
 
 
 # LIVE GRAPH UPDATE
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ticks = np.arange(11)
 
 def animate(i):
     pullData = open("points.txt","r").read()
     dataArray = pullData.split('\n')
-    xar = []
-    yar = []
-    iLine = 0
+    xSolution = []
+    ySolution = []
+    xAgents = []
+    yAgents = []
+    line = 0
     for eachLine in dataArray:
         if len(eachLine)>1:
             x,y = eachLine.split(',')
-            if iLine == 0:
-                ax.plot([x],[y], ".r")
-            xar.append(float(x))
-            yar.append(float(y))
-        iLine += 1
+            if line == 0:
+                xSolution.append(x)
+                ySolution.append(y)
+            xAgents.append(float(x))
+            yAgents.append(float(y))
+        line += 1
 
 
-    ax.clear()
-    ax.set_xlim([-100,100])
-    ax.set_ylim([-100,100])
-    ax.plot(xar,yar,".b")
+    plt.cla()
+    plt.plot(xSolution,ySolution, ".r", label="Actual solution")
+    plt.plot(xAgents,yAgents,".b",label="Solutions of the agents")
+    plt.xlabel("x1")
+    plt.ylabel("x2")
+    plt.legend()
     
-ani = animation.FuncAnimation(fig, animate, interval=1000, cache_frame_data=False)
+ani = animation.FuncAnimation(plt.gcf(), animate, interval=1000, cache_frame_data=False)
+
+
 plt.show()
