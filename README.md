@@ -21,6 +21,7 @@ Execution of the Projected Consensus Algorithm on a single thread. The agents ex
 
 ### multithread.py
 Execution of the Projected Consensus Algorithm on several threads: each agent executes the algorithm on its dedicated thread. Agents communicate via their queues. 
+Keep multithread, not the V2. Just for tests and side things
 
 ### timePlot.py
 Analysis of the results and comparison of performances between the multithread version of the program and the Raspberry Pi version.
