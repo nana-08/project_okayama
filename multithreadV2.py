@@ -52,26 +52,16 @@ match btype:
     case 1:
         m = int(input("------ Number of agents:\n"))
 
-        B = [[3,8,3,4,2,10,8,6,2,5],
-            [10,5,2,1,8,7,4,12,11,3],
-            [5,5,8,9,12,13,5,6,7,9],
-            [12,13,4,11,2,1,1,8,1,3],
-            [9,2,1,2,2,19,10,2,16,4],
-            [4,8,9,5,15,1,2,8,7,7],
-            [8,7,15,16,2,18,1,9,6,6],
-            [7,2,2,1,3,4,14,8,3,16],
-            [15,1,3,10,9,6,3,4,7,1],
-            [2,4,5,1,19,18,2,6,8,9]]
+        B = [[-65,33,28,71,59],
+            [56,29,38,-75,-33],
+            [72,-91,73,14,-70],
+            [16,9,-23,63,-62],
+            [-21,86,-6,23,56]]
 
         C = {"2":[37,80],
             "3":[70,102,133],
             "4":[90,107,178,209],
-            "5":[106,171,274,225,104],
-            "6":[126,185,300,227,142,290],
-            "7":[246,245,375,242,292,320,382],
-            "8":[324,400,453,346,318,424,499,426],
-            "9":[326,411,460,347,334,431,505,429,378],
-            "10":[361,433,523,368,362,480,547,541,385,449]}
+            "5":[149,634,440,-192,303]}
     case 2:
         m = int(input("------ Number of agents:\n"))
 
@@ -169,7 +159,11 @@ match btype:
 A = {"2":[0.5,0.5],
      "3":[0.33,0.33,0.34],
      "4":[0.25,0.25,0.25,0.25],
-     "5":[0.2,0.2,0.2,0.2,0.2],
+     "5":[[0.3,0.4,0.3,0,0],
+          [0.2,0.4,0.1,0.3,0],
+          [0.1,0.3,0.4,0,0.2],
+          [0,0.4,0,0.3,0.3],
+          [0,0,0.3,0.2,0.5]],
      "6":[0.166,0.166,0.166,0.166,0.166,0.17],
      "7":[0.14,0.14,0.14,0.14,0.14,0.14,0.16],
      "8":[0.125,0.125,0.125,0.125,0.125,0.125,0.125,0.125],
@@ -229,13 +223,13 @@ def agent(queues, i, bi, ci, ai):
             # every other states: project xHat on hyperplane
             xi = (np.identity(m) - np.outer(bi.T,bi)/(np.linalg.norm(bi)**2))@xHat + ci*bi.T/(np.linalg.norm(bi)**2)
         
-        pointsLock.acquire()
-        points[i+1] = xi[:2]
-        strPoints = ""
-        for p in points:
-            strPoints += str(p[0])+", "+str(p[1])+"\n"
-        open("points.txt","w").write(strPoints)
-        pointsLock.release()
+        # pointsLock.acquire()
+        # points[i+1] = xi[:2]
+        # strPoints = ""
+        # for p in points:
+        #     strPoints += str(p[0])+", "+str(p[1])+"\n"
+        # open("points.txt","w").write(strPoints)
+        # pointsLock.release()
             
         # communicate your solution to your neighbors
         for k in range(m):
@@ -259,7 +253,7 @@ def agent(queues, i, bi, ci, ai):
         xHat = ai@X 
 
         dist = np.linalg.norm(xHat - prevXHat)
-        if dist < 1E-10:
+        if dist < 1E-6:
             break
 
         iter = iter + 1
@@ -285,7 +279,7 @@ for i in range(m):
 
 threads = []
 for i in range(m):
-    ti = Thread(target = agent, args =(queues, i, np.array(Bm[i]), np.array(Cm[i]), np.array(Am)))    # each thread ti only knows the i-th row of each matrix
+    ti = Thread(target = agent, args =(queues, i, np.array(Bm[i]), np.array(Cm[i]), np.array(Am[i])))    # each thread ti only knows the i-th row of each matrix
     threads.append(ti)
     ti.start()
 
