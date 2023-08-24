@@ -66,13 +66,12 @@ while 1:  # todo
     # STEP 2: Compare solutions
     # weighted average
     prevXHat = xHat.copy()
-    for i in range(m):
-        xHat[i] = A[i]@X
+    xHat = A@X
 
     # print("X = ", X)
     # print("xHat = ", xHat)
     dist = np.linalg.norm(xHat - prevXHat)
-    if dist < 1E-6:
+    if dist < 1E-10:
         print("Solution found by the agents:", np.mean(xHat, axis=0))
         break
 

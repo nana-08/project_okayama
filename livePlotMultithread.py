@@ -4,29 +4,27 @@ import numpy as np
 
 
 # LIVE GRAPH UPDATE
+m = 3
 
 def animate(i):
-    pullData = open("points.txt","r").read()
-    dataArray = pullData.split('\n')
-    xSolution = []
-    ySolution = []
     xAgents = []
     yAgents = []
-    line = 0
-    for eachLine in dataArray:
-        if len(eachLine)>1:
-            x,y = eachLine.split(',')
-            if line == 0:
-                xSolution.append(x)
-                ySolution.append(y)
-            xAgents.append(float(x))
-            yAgents.append(float(y))
-        line += 1
-
+    for i in range(1,m+1):
+        f = open("points_"+str(i+1)+".txt","r")
+        lines = f.readlines()
+        xAgenti = []
+        yAgenti = []
+        for eachLine in lines:
+            if len(eachLine)>1:
+                x,y = eachLine.split(',')
+                xAgenti.append(float(x))
+                yAgenti.append(float(y))
+        
 
     plt.cla()
-    plt.plot(xSolution,ySolution, ".r", label="Actual solution")
-    plt.plot(xAgents,yAgents,".b",label="Solutions of the agents")
+    for i in range(m):
+        plt.plot(xAgents[i],yAgents[i],label="Solutions of agent "+str(i+1))
+    
     plt.xlabel("x1")
     plt.ylabel("x2")
     plt.legend()
