@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+# NOT POSSIBLE TO USE YET, STILL WAITING FOR DATA...
+
+
 fig, (axIter, axTime) = plt.subplots(1,2)
 
 types = ("Equal weights", "Unequal Positive Weights", "Null self-loops", "Unexistant edge between 2 agents", "Chain")
@@ -8,8 +12,8 @@ types = ("Equal weights", "Unequal Positive Weights", "Null self-loops", "Unexis
 
 
 dataIter = {
-    'Multithread': (20464, 24104.6, 16726.8, 1, 1),
-    'Raspberry Pi': (15284.2, 195.82, 217.19, 1, 1),
+    'Multithread': (20464, 24104.6, 16726.8, 0, 0),
+    'Raspberry Pi': (15284.2, 0, 0, 0, 0),
 }
 
 x = np.arange(len(types))  # the label locations
@@ -31,8 +35,8 @@ axIter.legend()
 
 
 dataTime = {
-    'Multithread': (12.82801, 16.07327, 11.24563, 1, 1),
-    'Raspberry Pi': (1244.566, 195.82, 217.19, 1, 1),
+    'Multithread': (12.82801, 16.07327, 11.24563, 0, 0),
+    'Raspberry Pi': (1244.566, 0, 0, 0, 0),
 }
 
 x = np.arange(len(types))  # the label locations
