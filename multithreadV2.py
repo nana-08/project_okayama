@@ -168,8 +168,8 @@ match btype:
 
 A = {"2":[[0.5,0.5],
           [0.5,0.5]],
-     "3":[[0.67,0,0.33],
-          [0,0.5,0.5],
+     "3":[[0.33,0.33,0.34],
+          [0.33,0.33,0.34],
           [0.33,0.33,0.34]],
      "4":[[0.25,0.25,0.25,0.25],
           [0.25,0.25,0.25,0.25],
@@ -252,10 +252,12 @@ def agent(queues, i, bi, ci, ai):
             nbNeighbors+=1
 
 
-    filePoints = open("points_"+str(i+1)+".txt","w")
-    filePoints.close()
+    # filePoints = open("points_"+str(i+1)+".txt","w")
+    # filePoints.close()
 
     iter = 0
+    timePut = []
+    timeGet = []
     start = time.time()
     while True:
 
@@ -275,7 +277,9 @@ def agent(queues, i, bi, ci, ai):
         # communicate your solution to your neighbors
         for k in range(m):
             if k != i and ai[k] > 0:
+                startPut = time.time()
                 queues[k].put((i, xi)) # each agent communicates their id and their current solution
+                timePut.append(time.time() - startPut)
 
 
         # STEP 2: Compare solutions
@@ -284,7 +288,9 @@ def agent(queues, i, bi, ci, ai):
         X[i] = xi
         try:
             for _ in range(nbNeighbors):
+                startGet = time.time()
                 j, xj = queues[i].get(timeout=1)
+                timeGet.append(time.time() - startGet)
                 X[j] = xj
         except:
             break
@@ -293,11 +299,11 @@ def agent(queues, i, bi, ci, ai):
         prevXHat = xHat.copy()
         xHat = ai@X 
 
-        pointsLock.acquire()
-        filePoints = open("points_"+str(i+1)+".txt","a")
-        filePoints.write(str(xHat[0])+", "+str(xHat[1])+"\n")
-        filePoints.close()
-        pointsLock.release()
+        # pointsLock.acquire()
+        # filePoints = open("points_"+str(i+1)+".txt","a")
+        # filePoints.write(str(xHat[0])+", "+str(xHat[1])+"\n")
+        # filePoints.close()
+        # pointsLock.release()
 
         dist = np.linalg.norm(xHat - prevXHat)
         if dist < 1E-10:
@@ -307,6 +313,8 @@ def agent(queues, i, bi, ci, ai):
             
     temps = time.time()-start
     # print("Solution found by the agent",i+1,":",list(map(round, xHat)),", in",iter,"iterations,",round(temps,3),"seconds")
+    print("average time to put a message in a queue:",np.array(timePut).mean())
+    print("average time to get a message from queue:",np.array(timeGet).mean())
     solutionsLock.acquire()
     solutions.append(xHat)
     solutionsLock.release()

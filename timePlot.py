@@ -55,5 +55,22 @@ for xi, yi, text in zip(x, regTimeRpi, annoRpi):
                 bbox=dict(boxstyle="square,pad=0.3", fc="white", ec="blue"))
 
 
+plt.show()
+
+
+
+plt.subplot(121)
+ratioIter = [i/j for i,j in zip(regIterThreads, regIterRpi)]
+plt.plot(x, ratioIter)
+plt.xlabel("Number of agents")
+plt.ylabel("nbIterationsMultithread/nbIterationsRPi")
+plt.title("Number of iterations ratio multithread to RPi")
+
+plt.subplot(122)
+ratioTime = [i/j for i,j in zip(regTimeThread, regTimeRpi)]
+plt.plot(x, ratioTime)
+plt.xlabel("Number of agents")
+plt.ylabel("timeMultithread/timeRpi")
+plt.title("Time ratio multithread to RPi")
 
 plt.show()

@@ -251,7 +251,7 @@ match atype:
                 [0.3,0.4,0.3,0.0,0.0],
                 [0.0,0.3,0.5,0.2,0.0],
                 [0.0,0.0,0.1,0.6,0.3],
-                [0.0,0.4,0.0,0.4,0.6]]}
+                [0.0,0.0,0.0,0.4,0.6]]}
 
 
 Bm = [[j for j in B[i][:m]] for i in range(m)]
@@ -281,6 +281,10 @@ def agent(queues, i, bi, ci, ai):
     for j in range(m):
         if i!=j and ai[j]>0.:   # do not count yourself as a neighbor
             nbNeighbors+=1
+
+    # for the live plot
+    # filePoints = open("points_"+str(i+1)+".txt","w")
+    # filePoints.close()
 
     iter = 0
     start = time.time()
@@ -319,6 +323,13 @@ def agent(queues, i, bi, ci, ai):
         # weighted average
         prevXHat = xHat.copy()
         xHat = ai@X 
+
+        # for the live plot
+        # pointsLock.acquire()
+        # filePoints = open("points_"+str(i+1)+".txt","a")
+        # filePoints.write(str(xHat[0])+", "+str(xHat[1])+"\n")
+        # filePoints.close()
+        # pointsLock.release()
 
         dist = np.linalg.norm(xHat - prevXHat)
         if dist < 1E-10:
